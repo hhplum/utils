@@ -14,7 +14,7 @@ const expFun = (name: string, format: string = 'js'): PlainObject => ({
   types: `./dist/${name}.d.ts`,
   production: `./dist/${name}.prod.${format}`,
   development: `./dist/${name}.${format}`,
-  default: `./dist/${name}.${format}`
+  default: `./dist/${name}.${format}`,
 })
 
 const handle = async (c: Pkg) => {
@@ -28,6 +28,8 @@ const handle = async (c: Pkg) => {
   const data = await devPkgData(c)
   // change main module exports
   data['main'] = './dist/index.js'
+
+  data['types'] = './dist/index.d.ts'
 
   let base = expFun('index')
   let ext = 'js'
@@ -50,10 +52,10 @@ const handle = async (c: Pkg) => {
           node: {
             production: './dist/index.prod.js',
             development: './dist/index.js',
-            default: './dist/index.js'
+            default: './dist/index.js',
           },
-          default: './dist/index.js'
-        }
+          default: './dist/index.js',
+        },
       }
       ex1 = {
         import: expFun('*', 'mjs'),
@@ -62,10 +64,10 @@ const handle = async (c: Pkg) => {
           node: {
             production: './dist/*.prod.js',
             development: './dist/*.js',
-            default: './dist/*.js'
+            default: './dist/*.js',
           },
-          default: './dist/*.js'
-        }
+          default: './dist/*.js',
+        },
       }
 
       // delete fields used by tsx during development
@@ -74,13 +76,13 @@ const handle = async (c: Pkg) => {
       break
     case 'test':
       data['peerDependencies'] = {
-        vitest: '*'
+        vitest: '*',
       }
 
       data['peerDependenciesMeta'] = {
         vitest: {
-          optional: true
-        }
+          optional: true,
+        },
       }
       break
   }
@@ -107,7 +109,7 @@ const handle = async (c: Pkg) => {
 
   await Fs.outputJSON(pkgPath, data)
   await program('pnpm exec prettier', ['--ignore-path', '--write', pkgPath], {
-    Exit: false
+    Exit: false,
   })
 }
 
