@@ -8,7 +8,8 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "postinstall": "simple-git-hooks"
+    "postinstall": "simple-git-hooks",
+    "format": "prettier --write --cache ."
   },
   "devDependencies": {
     "@hhplum/utils-browser": "workspace:*",
@@ -16,11 +17,15 @@
     "@hhplum/utils-node": "workspace:*",
     "@hhplum/utils-test": "workspace:*",
     "lint-staged": "^15.2.7",
+    "prettier": "^3.3.2",
     "simple-git-hooks": "^2.11.1"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged --concurrent false"
   },
   "lint-staged": {
+    "*": [
+      "prettier --write --cache --ignore-unknown"
+    ]
   }
 }
