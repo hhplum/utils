@@ -11,10 +11,10 @@ await Fs.remove('./.rollup.cache')
 await Fs.emptyDir(distPath())
 
 const expFun = (name: string, format: string = 'js'): PlainObject => ({
-  types: `./${name}.d.ts`,
-  production: `./${name}.prod.${format}`,
-  development: `./${name}.${format}`,
-  default: `./${name}.${format}`
+  types: `./dist/${name}.d.ts`,
+  production: `./dist/${name}.prod.${format}`,
+  development: `./dist/${name}.${format}`,
+  default: `./dist/${name}.${format}`
 })
 
 const handle = async (c: Pkg) => {
@@ -27,7 +27,7 @@ const handle = async (c: Pkg) => {
   // read package.json
   const data = await devPkgData(c)
   // change main module exports
-  data['main'] = 'index.js'
+  data['main'] = './dist/index.js'
 
   let base = expFun('index')
   let ext = 'js'
@@ -46,25 +46,25 @@ const handle = async (c: Pkg) => {
       base = {
         import: expFun('index', 'mjs'),
         require: {
-          types: './index.d.ts',
+          types: './dist/index.d.ts',
           node: {
-            production: './index.prod.js',
-            development: './index.js',
-            default: './index.js'
+            production: './dist/index.prod.js',
+            development: './dist/index.js',
+            default: './dist/index.js'
           },
-          default: './index.js'
+          default: './dist/index.js'
         }
       }
       ex1 = {
         import: expFun('*', 'mjs'),
         require: {
-          types: './*.d.ts',
+          types: './dist/*.d.ts',
           node: {
-            production: './*.prod.js',
-            development: './*.js',
-            default: './*.js'
+            production: './dist/*.prod.js',
+            development: './dist/*.js',
+            default: './dist/*.js'
           },
-          default: './*.js'
+          default: './dist/*.js'
         }
       }
 
@@ -85,7 +85,7 @@ const handle = async (c: Pkg) => {
       break
   }
 
-  data['module'] = `index.${ext}`
+  data['module'] = `./dist/index.${ext}`
 
   data['exports'] = { '.': base, './*': ex1 }
 
