@@ -1,0 +1,6 @@
+.git
+.idea
+dist
+.rollup.cache/
+node_modules
+/docs/.vitepress
