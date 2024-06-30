@@ -1,0 +1,42 @@
+{
+  "name": "@hhplum/utils-global",
+  "version": "0.0.1",
+  "description": "Code toolset for global environments | 全局环境的代码工具集",
+  "author": "浩昊Plum <hhplum6@gmail.com>",
+  "license": "MIT",
+  "main": "index.ts",
+  "type": "module",
+  "module": "index.ts",
+  "types": "index.d.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./*": "./*.ts"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hhplum/utils.git",
+    "directory": "packages/global"
+  },
+  "bugs": {
+    "url": "https://github.com/hhplum/utils/issues"
+  },
+  "homepage": "https://github.com/hhplum/utils/tree/main/packages/global#readme",
+  "keywords": [
+    "util",
+    "utils",
+    "utility",
+    "utilities",
+    "javascript",
+    "typescript",
+    "esm",
+    "import",
+    "require",
+    "global",
+    "environment",
+    "production",
+    "development"
+  ]
+}
