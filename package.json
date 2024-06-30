@@ -11,6 +11,10 @@
     "postinstall": "simple-git-hooks"
   },
   "devDependencies": {
+    "@hhplum/utils-browser": "workspace:*",
+    "@hhplum/utils-global": "workspace:*",
+    "@hhplum/utils-node": "workspace:*",
+    "@hhplum/utils-test": "workspace:*",
     "lint-staged": "^15.2.7",
     "simple-git-hooks": "^2.11.1"
   },
