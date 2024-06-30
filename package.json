@@ -9,16 +9,36 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "postinstall": "simple-git-hooks",
-    "format": "prettier --write --cache ."
+    "format": "prettier --write --cache .",
+    "lint": "eslint --cache ."
   },
   "devDependencies": {
     "@hhplum/utils-browser": "workspace:*",
     "@hhplum/utils-global": "workspace:*",
     "@hhplum/utils-node": "workspace:*",
     "@hhplum/utils-test": "workspace:*",
+    "eslint": "^9.5.0",
+    "eslint-plugin-import-x": "^0.5.2",
+    "eslint-plugin-n": "^17.9.0",
+    "eslint-plugin-regexp": "^2.6.0",
+    "globals": "^15.6.0",
     "lint-staged": "^15.2.7",
     "prettier": "^3.3.2",
-    "simple-git-hooks": "^2.11.1"
+    "simple-git-hooks": "^2.11.1",
+    "tslib": "^2.6.3",
+    "typescript": "^5.5.2",
+    "typescript-eslint": "^7.14.1"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "typescript-eslint>eslint": "^9.0.0",
+        "@typescript-eslint/eslint-plugin>eslint": "^9.0.0",
+        "@typescript-eslint/parser>eslint": "^9.0.0",
+        "@typescript-eslint/type-utils>eslint": "^9.0.0",
+        "@typescript-eslint/utils>eslint": "^9.0.0"
+      }
+    }
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged --concurrent false"
@@ -26,6 +46,9 @@
   "lint-staged": {
     "*": [
       "prettier --write --cache --ignore-unknown"
+    ],
+    "*.{js,ts,md}": [
+      "eslint --fix"
     ]
   }
 }
