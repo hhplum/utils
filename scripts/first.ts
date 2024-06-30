@@ -5,7 +5,7 @@ const excludeFun = (exclude: string[] = []) =>
     exclude,
   )
 const contentFun = (path: string) =>
-  ['// indexFile function Automatically generated','// See \'scripts/first.ts\' for details.','// indexFile函数 自动生成','详见\'scripts/first.ts\''].concat(
+  ['// indexFile function Automatically generated','// See \'scripts/first.ts\' for details.','// indexFile函数 自动生成','// 详见\'scripts/first.ts\''].concat(
     path.includes('global') ? [] : ['export * from "@hhplum/utils-global";'],
   )
 
