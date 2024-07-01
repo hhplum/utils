@@ -12,6 +12,9 @@
     ".": "./index.ts",
     "./*": "./*.ts"
   },
+  "dependencies": {
+    "dayjs": "^1.11.7"
+  },
   "files": [
     "dist"
   ],
