@@ -2,15 +2,16 @@
   "name": "@hhplum/utils-global",
   "version": "0.0.1",
   "description": "Code toolset for global environments | 全局环境的代码工具集",
-  "author": "浩昊Plum <hhplum6@gmail.com>",
+  "author": "浩昊Plum",
   "license": "MIT",
-  "main": "index.ts",
   "type": "module",
-  "module": "index.ts",
-  "types": "index.d.ts",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.d.ts",
   "exports": {
-    ".": "./index.ts",
-    "./*": "./*.ts"
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts",
+    "./package.json": "./package.json"
   },
   "dependencies": {
     "crypto-js": "^4.1.1",
