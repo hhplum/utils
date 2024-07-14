@@ -1,171 +1,124 @@
-// @ts-check
-import { builtinModules, createRequire } from 'node:module'
-import { fileURLToPath } from 'node:url'
-import { join, resolve } from 'node:path'
-import { defineConfig } from 'rollup'
+import { env } from 'node:process'
+import { basename, join } from 'node:path'
+import { builtinModules } from 'node:module'
+import { readFileSync, readdirSync } from 'node:fs'
+import type {
+  InputOption,
+  ModuleFormat,
+  OutputOptions,
+  Plugin,
+  RollupOptions,
+} from 'rollup'
+import { defineConfig as _defineConfig } from 'rollup'
 import json from '@rollup/plugin-json'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
-import typescript from '@rollup/plugin-typescript'
-import terser from '@rollup/plugin-terser'
+import type { Options as EsbuildOptions } from 'rollup-plugin-esbuild'
+import esbuild from 'rollup-plugin-esbuild'
 import commonjs from '@rollup/plugin-commonjs'
+import dts from 'rollup-plugin-dts'
 
-/** @typedef {import('rollup').InputOption} InputOption */
-/** @typedef {import('rollup').OutputOptions} OutputOptions */
-/** @typedef {import('rollup').ModuleFormat} ModuleFormat */
-/** @typedef {import('rollup').RollupOptions} RollupOptions */
-/** @typedef {import('@rollup/plugin-typescript').RollupTypescriptOptions} RollupTypescriptOptions */
+const output = './dist'
 
-const require = createRequire(import.meta.url)
-const _dirname = fileURLToPath(new URL('.', import.meta.url))
+type OutputType = ('declaration' | 'prod' | 'dev')[]
 
-/**
- *
- * @param {string} n
- * @return {string}
- */
-const packages = n => resolve(_dirname, 'packages', n, 'package.json')
+interface Config {
+  name: string
+  format: ModuleFormat
+  tsconfig: string
+  pkg: Record<string, string>
+  file: OutputType
+}
 
-const output = 'dist'
+const defineConfig = (
+  name: string,
+  format: ModuleFormat,
+  cwd: string,
+  file: OutputType = ['dev', 'prod', 'declaration'],
+): Config => ({
+  name,
+  format,
+  pkg: JSON.parse(readFileSync(join(cwd, 'package.json')).toString()),
+  tsconfig: join(cwd, './tsconfig.json'),
+  file,
+})
 
-/**
- * 公共
- * @param {InputOption} input
- * @param {OutputOptions} output
- * @param {RollupTypescriptOptions} typescriptOptions
- * @return {RollupOptions}
- */
-const common = (input, output, typescriptOptions) =>
-  defineConfig({
+const common = (input: InputOption, output: OutputOptions, plugins: Plugin[]) =>
+  _defineConfig({
     cache: false,
-    // 项目入口
     input,
-    // 打包后的出口和设置
     output: {
       sourcemap: false,
       exports: 'auto',
       preserveModules: true,
       ...output,
     },
-    // 使用的插件
-    // 注意，这里的插件使用是有顺序的，先把ts编译为js，然后查找依赖
-    plugins: [typescript(typescriptOptions), json(), nodeResolve(), commonjs()],
+    plugins: [...plugins, json(), nodeResolve(), commonjs()],
 
     external: [...builtinModules, /node_modules/, /@hhplum\/utils-global/],
   })
 
-/** @typedef {{format: ModuleFormat, name: string, tsconfig: string}} Config */
-
-/** @type {Array<Config>} */
-const config = [
-  {
-    format: 'esm',
-    name: 'browser',
-    tsconfig: 'tsconfig.web.json',
-  },
-  {
-    format: 'esm',
-    name: 'global',
-    tsconfig: 'tsconfig.web.json',
-  },
-  {
-    format: 'esm',
-    name: 'node',
-    tsconfig: 'tsconfig.node.json',
-  },
-  {
-    format: 'cjs',
-    name: 'node',
-    tsconfig: 'tsconfig.node.json',
-  },
-  // {
-  //   format: 'esm',
-  //   name: 'test',
-  //   tsconfig: 'tsconfig.node.json'
-  // }
-]
-
-/** @type {Array<RollupOptions>} */
-const result = []
-
-/**
+const esbuildPlugin = (options: EsbuildOptions) => esbuild(options)
+/*
  *
- * @param {boolean} es
- * @return {import('rollup').Plugin}
- */
-const terserPlugin = es =>
-  terser({
-    module: es,
-    compress: {
-      ecma: 2020,
-      // drop_console: true,
-      // drop_debugger: true
-      pure_getters: true,
-    },
-    safari10: true,
-  })
+ * */
+const dtsPlugin = dts()
 
-/**
- *
- * @param {Config} c
- * @return {Array<RollupOptions>}
- */
-const specially = c => {
-  const { format, tsconfig, name } = c
+const specially = (c: Config): RollupOptions[] => {
+  const { format, tsconfig, name, pkg, file } = c
 
   const esm = ['es', 'esm'].includes(format)
-  const out = `./${output}/${name}/dist`
-  const root = `./packages/${name}`
-  const pkg = require(packages(name))
 
   const ext = name === 'node' && esm ? 'mjs' : 'js'
 
-  const Input = join(root, 'index.ts')
+  const Input: InputOption = './src/index.ts'
 
-  const Output = {
-    dir: out,
+  const Output = (e: string = ext): OutputOptions => ({
+    dir: output,
     format,
     esModule: true,
-    entryFileNames: `[name].${ext}`,
+    entryFileNames: `[name].${e}`,
     banner: `/**
-* \\${pkg.name} v${pkg.version}
-* @copyright (c) 2024-present 浩昊Plum
-* @license MIT
+* @desc ${pkg.name} v${pkg.version}
+* @copyright (c) 2024-present ${pkg.author}
+* @license ${pkg.license}
 **/`,
-  }
+  })
 
-  const TsConfig = {
-    tsconfig: resolve('./', tsconfig),
-    outputToFilesystem: false,
-    compilerOptions: {
-      rootDir: root,
-      baseUrl: '../../',
-      outDir: out,
-      declarationDir: out,
-    },
-  }
+  const result: RollupOptions[] = []
 
-  return [
-    // 不带注释 js removeComments => 不生成dts
-    common(Input, Output, {
-      ...TsConfig,
-      compilerOptions: {
-        ...TsConfig.compilerOptions,
-        removeComments: true,
-        declaration: false,
-      },
-    }),
-    common(
-      Input,
-      {
-        ...Output,
-        plugins: terserPlugin(esm),
-        entryFileNames: `[name].prod.${ext}`,
-      },
-      TsConfig,
-    ),
-  ]
+  file.includes('dev') &&
+    result.push(common(Input, Output(), [esbuildPlugin({ tsconfig })]))
+  file.includes('prod') &&
+    result.push(
+      common(Input, Output(`prod.${ext}`), [
+        esbuildPlugin({
+          tsconfig,
+          minify: true,
+        }),
+      ]),
+    )
+  file.includes('declaration') &&
+    result.push(common(Input, Output('d.ts'), [dtsPlugin]))
+
+  return result
 }
 
-config.forEach(c => result.push(...specially(c)))
+const cwd = env.INIT_CWD as string
+
+const pkg = basename(cwd)
+
+let result: RollupOptions[] = []
+
+if (readdirSync(new URL('./packages', import.meta.url)).includes(pkg)) {
+  if (pkg !== 'node') result = specially(defineConfig(pkg, 'esm', cwd))
+  else {
+    const config: Config[] = [
+      defineConfig('node', 'esm', cwd),
+      defineConfig('node', 'cjs', cwd, ['dev', 'prod']),
+    ]
+
+    config.forEach(c => result.push(...specially(c)))
+  }
+}
 
 export default result
