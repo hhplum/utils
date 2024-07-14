@@ -1,0 +1,22 @@
+{
+  "include": ["./*.ts"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "sourceMap": false,
+    "noUnusedLocals": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "removeComments": false,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "paths": {
+      "@hhplum/utils-*": ["../packages/*"]
+    },
+    "types": ["node"]
+  }
+}
