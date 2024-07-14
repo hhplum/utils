@@ -5,7 +5,6 @@ import tseslint from 'typescript-eslint'
 import pluginN from 'eslint-plugin-n'
 import pluginImportX from 'eslint-plugin-import-x'
 import * as pluginRegexp from 'eslint-plugin-regexp'
-// import vitest from 'eslint-plugin-vitest'
 import globals from 'globals'
 
 export default tseslint.config(
@@ -120,7 +119,6 @@ export default tseslint.config(
       'packages/node/**/*',
       'packages/test/**/*',
       '**/__tests__/**/*',
-      'build/**/*',
       'scripts/**/*',
       'rollup.config.js',
       'vitest.config.ts',
