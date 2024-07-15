@@ -1,38 +1,39 @@
+import process from 'node:process'
 import { type IndexFile, indexFile } from '@hhplum/utils-node/file/indexFile'
+import { Fs } from '@hhplum/utils-node/file/info'
+import { NP_BN } from '@hhplum/utils-node/path/node'
+import type { Pkg } from './util'
+import { devDirs, devPath } from './util'
 
-const excludeFun = (exclude: string[] = []) =>
-  ['node_modules', '__tests__', 'index.ts', 'package.json', 'README.md'].concat(
+const pkg = NP_BN(process.env.INIT_CWD as string)
+
+if ((await devDirs()).includes(pkg as Pkg)) {
+  // const excludeFun = (exclude: string[] = []) => [].concat(exclude)
+  const contentFun = (path: string) =>
+    [
+      '// indexFile function Automatically generated',
+      "// See 'scripts/first.ts' for details.",
+      '// indexFile函数 自动生成',
+      "// 详见'scripts/first.ts'",
+    ].concat(
+      path.includes('global') ? [] : ['export * from "@hhplum/utils-global";'],
+    )
+
+  const input = (
+    path: string,
+    output?: string,
+    exclude?: string[],
+  ): IndexFile => ({
+    path,
+    // exclude: excludeFun(exclude),
     exclude,
-  )
-const contentFun = (path: string) =>
-  ['// indexFile function Automatically generated','// See \'scripts/first.ts\' for details.','// indexFile函数 自动生成','// 详见\'scripts/first.ts\''].concat(
-    path.includes('global') ? [] : ['export * from "@hhplum/utils-global";'],
-  )
+    output: `${path}/${output || 'index'}.ts`,
+    content: contentFun(path),
+    // derive: 'name',
+  })
 
-const input = (
-  path: string,
-  output?: string,
-  exclude?: string[],
-): IndexFile => ({
-  path,
-  exclude: excludeFun(exclude),
-  output: `./${path}/${output || 'index'}.ts`,
-  content: contentFun(path),
-  // derive: 'name',
-})
-
-await indexFile([
-  input('packages/browser'),
-  input('packages/global'),
-  input('packages/node', undefined, [
-    'batch',
-    'compress',
-    'config',
-    'database',
-    'git',
-    'rsa',
-  ]),
-  input('packages/test'),
-])
+  await Fs.remove(devPath(pkg, 'dist'))
+  await indexFile([input(devPath(pkg, 'src'))])
+}
 
 // process.exit()
