@@ -11,9 +11,10 @@
     "postinstall": "simple-git-hooks",
     "format": "prettier --write --cache .",
     "lint": "eslint --cache .",
-    "first": "tsx scripts/first.ts",
-    "build": "tsx scripts/build.ts && rollup -c",
-    "test": "vitest run"
+    "typecheck": "tsc -p scripts --noEmit && pnpm -r --parallel run typecheck",
+    "build": "pnpm -r --filter='./packages/*' run build",
+    "test": "vitest run",
+    "prepublish": "pnpm run build"
   },
   "devDependencies": {
     "@hhplum/utils-browser": "workspace:*",
@@ -23,10 +24,9 @@
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-typescript": "^11.1.6",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^18.19.39",
+    "esbuild": "^0.23.0",
     "eslint": "^9.5.0",
     "eslint-plugin-import-x": "^0.5.2",
     "eslint-plugin-n": "^17.9.0",
@@ -36,6 +36,8 @@
     "lint-staged": "^15.2.7",
     "prettier": "^3.3.2",
     "rollup": "^4.18.0",
+    "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-esbuild": "^6.1.1",
     "simple-git-hooks": "^2.11.1",
     "tslib": "^2.6.3",
     "tsx": "^4.15.7",
@@ -55,7 +57,7 @@
     }
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm first && pnpm exec lint-staged --concurrent false"
+    "pre-commit": "pnpm -r --parallel run prebuild && pnpm exec lint-staged --concurrent false"
   },
   "lint-staged": {
     "*": [
