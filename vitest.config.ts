@@ -1,13 +1,16 @@
 import { join } from 'node:path'
 import { defineConfig } from 'vitest/config'
-import tsconfigPaths from 'vite-tsconfig-paths'
 
 const root = (...path: string[]) => join(__dirname, ...path)
 const packages = (path: string = '') => root('packages', path)
 
 export default defineConfig({
-  plugins: [tsconfigPaths()],
+  publicDir: false,
   test: {
+    include: ['**/__tests__/**/*.test.[tj]s'],
+    exclude: ['**/node_modules/**', '**/dist/**'],
+    testTimeout: 20000,
+    isolate: false,
     globals: true,
     environmentMatchGlobs: [
       ['packages/browser', 'jsdom'],
@@ -15,6 +18,11 @@ export default defineConfig({
       ['packages/node', 'node'],
       ['packages/test', 'node'],
     ],
+  },
+  esbuild: {
+    target: 'node18',
+  },
+  resolve: {
     alias: {
       '@hhplum/utils-*': packages(),
     },
