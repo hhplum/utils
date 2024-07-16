@@ -2,7 +2,7 @@
   "name": "@hhplum/utils-global",
   "version": "0.0.1",
   "description": "Code toolset for global environments | 全局环境的代码工具集",
-  "author": "浩昊Plum",
+  "author": "浩昊Plum <hhplum6@gmail.com>",
   "license": "MIT",
   "type": "module",
   "main": "./src/index.ts",
@@ -13,12 +13,40 @@
     "./*": "./src/*.ts",
     "./package.json": "./package.json"
   },
+  "scripts": {
+    "build": "rollup --config ../../rollup.config.ts --configPlugin esbuild",
+    "typecheck": "tsc --noEmit",
+    "prebuild": "tsx ../../scripts/first.ts",
+    "prepublishOnly": "pnpm run build"
+  },
   "dependencies": {
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.7"
   },
   "devDependencies": {
     "@types/crypto-js": "^4.1.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "production": "./dist/index.prod.js",
+        "development": "./dist/index.js",
+        "default": "./dist/index.js"
+      },
+      "./*": {
+        "types": "./dist/*.d.ts",
+        "production": "./dist/*.prod.js",
+        "development": "./dist/*.js",
+        "default": "./dist/*.js"
+      },
+      "./package.json": "./package.json"
+    }
   },
   "files": [
     "dist"
