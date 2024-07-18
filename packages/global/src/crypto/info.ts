@@ -1,9 +1,9 @@
 import CryptoJS from 'crypto-js'
 import type { ExtractKey } from '../info'
 
-export type CryptoJS = typeof CryptoJs
+export type CryptoJs = typeof CryptoJs
 
-export type CipherHelper = CryptoJS['AES']
+export type CipherHelper = CryptoJs['AES']
 
 export interface CryptoBaseKey {
   /**
@@ -30,7 +30,7 @@ export interface CryptoKey extends CryptoBaseKey {
   /**
    * 加密算法
    */
-  type: ExtractKey<CryptoJS, CipherHelper>
+  type: ExtractKey<CryptoJs, CipherHelper>
   /**
    * 偏移量
    * @note 支持含中文字符串
@@ -39,11 +39,11 @@ export interface CryptoKey extends CryptoBaseKey {
   /**
    * 处理模式
    */
-  mode: keyof CryptoJS['mode']
+  mode: keyof CryptoJs['mode']
   /**
    * 填充模式
    */
-  padding: keyof CryptoJS['pad']
+  padding: keyof CryptoJs['pad']
 }
 
 /**
