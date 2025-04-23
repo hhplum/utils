@@ -19,6 +19,7 @@
     "prepublish": "pnpm run build"
   },
   "devDependencies": {
+    "@eslint/js": "^9.25.0",
     "@hhplum/release-scripts": "^1.1.2",
     "@hhplum/utils-browser": "workspace:^",
     "@hhplum/utils-global": "workspace:^",
@@ -56,8 +57,11 @@
     "*": [
       "prettier --write --cache --ignore-unknown"
     ],
-    "*.{js,ts,md}": [
-      "eslint --fix"
+    "packages/*/{src,types}/**/*.ts": [
+      "eslint --cache --fix"
+    ],
+    "packages/**/*.d.ts": [
+      "eslint --cache --fix"
     ]
   }
 }
