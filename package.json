@@ -63,5 +63,6 @@
     "packages/**/*.d.ts": [
       "eslint --cache --fix"
     ]
-  }
+  },
+  "packageManager": "pnpm@10.9.0"
 }
