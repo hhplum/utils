@@ -1,7 +1,7 @@
 // 转换系列
 import type { PlainObject } from '../info'
-import { isArray } from '../verify/array'
-import { isString } from '../verify/string'
+import { isArray } from '../verify/Array'
+import { isString } from '../verify/String'
 
 /**
  * 单个元素转换为数组
@@ -33,12 +33,12 @@ export function toVal<O extends PlainObject>(object: O): O
  */
 export function toVal<O extends PlainObject, K extends keyof O>(
   object: O,
-  key?: K
+  key?: K,
 ): O[K]
 
 export function toVal<O extends PlainObject, K extends keyof O>(
   object: O,
-  key?: K
+  key?: K,
 ): O | O[K] {
   return key !== undefined ? object[key] : object
 }
@@ -56,11 +56,11 @@ export const toSafeObj = <
   O extends Partial<Record<K, any>>,
 >(
   keys: K[],
-  object?: O
+  object?: O,
 ): Partial<Record<K, O[K]>> =>
   keys.reduce(
     (acc, key) => ({ ...acc, [key]: object?.[key] }),
-    {} as Partial<Record<K, O[K]>>
+    {} as Partial<Record<K, O[K]>>,
   )
 
 // 待处理 可能不需要
@@ -90,7 +90,7 @@ const toCase = (
   input: string,
   callback: (value: string, index: number, array: string[]) => string,
   split: string | RegExp = /[^a-zA-Z0-9]/,
-  join: string = ''
+  join: string = '',
 ) => input.split(split).map(callback).join(join)
 
 // 单词首字母大写
@@ -112,7 +112,7 @@ export const toCamelCase = (input: string, split?: string | RegExp): string =>
       if (index === 0) return word.toLowerCase()
       return toCapitalize(word)
     },
-    split
+    split,
   )
 /**
  * 小驼峰命名法
@@ -187,8 +187,10 @@ export const toLowerSpinalCase = toSpinalCase
  * @param input 字符串
  * @param split=/[^a-zA-Z0-9]/ 分割分隔符
  */
-export const toUpperSpinalCase = (input: string, split: string | RegExp): string =>
-  toCase(input, word => word.toUpperCase(), split, '-')
+export const toUpperSpinalCase = (
+  input: string,
+  split: string | RegExp,
+): string => toCase(input, word => word.toUpperCase(), split, '-')
 
 /**
  * 蛇形/下划线命名法
@@ -210,16 +212,23 @@ export const toLowerSnakeCase = toSnakeCase
  * @param input 字符串
  * @param split=/[^a-zA-Z0-9]/ 分割分隔符
  */
-export const toUpperSnakeCase = (input: string, split: string | RegExp): string =>
-  toCase(input, word => word.toUpperCase(), split, '_')
-export const toScreamingSnakeCase = (input: string, split: string | RegExp): string =>
-  toCase(input, word => word.toUpperCase(), split, '_')
+export const toUpperSnakeCase = (
+  input: string,
+  split: string | RegExp,
+): string => toCase(input, word => word.toUpperCase(), split, '_')
+export const toScreamingSnakeCase = (
+  input: string,
+  split: string | RegExp,
+): string => toCase(input, word => word.toUpperCase(), split, '_')
 
 // Convert back to original format
-export const fromCamelCase = (camelCaseStr: string, separator: string = '_'): string =>
+export const fromCamelCase = (
+  camelCaseStr: string,
+  separator: string = '_',
+): string =>
   camelCaseStr.replace(
     /([a-z])([A-Z])/g,
-    (_$0, $1, $2) => `${$1}${separator}${$2.toLowerCase()}`
+    (_$0, $1, $2) => `${$1}${separator}${$2.toLowerCase()}`,
   )
 
 // const originalInput = fromCamelCase('pathFile', '/')

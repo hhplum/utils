@@ -1,5 +1,5 @@
 import { URLRegExp, isTypeIf, isTypeOf } from './info'
-import { isString } from './string'
+import { isString } from './String'
 
 const common = (
   val: string | URL,

@@ -1,4 +1,4 @@
-import { isString } from '../verify/string'
+import { isString } from '../verify/String'
 import type { PlainObject } from '../info'
 import type { CipherHelper, CryptoKey } from './info'
 import {
@@ -75,7 +75,7 @@ export const decrypt = (
   // 尝试解析对象
   try {
     return JSON.parse(result) as PlainObject
-  } catch (error) {
+  } catch (_error) {
     return result
   }
 }

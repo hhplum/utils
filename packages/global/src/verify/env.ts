@@ -1,8 +1,8 @@
 import { isNOU } from './only'
-import { isNumber } from './number'
-import { isString } from './string'
-import { isFunction } from './function'
-import { isObject } from './object'
+import { isNumber } from './Number'
+import { isString } from './String'
+import { isFunction } from './Function'
+import { isObject } from './Object'
 import { isTypeOf } from './info'
 
 export const isWindow = (val: any = globalThis): val is Window =>

@@ -1,8 +1,8 @@
-import { isString } from './string'
-import { isArray } from './array'
-import { isMap } from './map'
-import { isSet } from './set'
-import { isObject } from './object'
+import { isString } from './String'
+import { isArray } from './Array'
+import { isMap } from './Map'
+import { isSet } from './Set'
+import { isObject } from './Object'
 
 export const isEmpty = (val: unknown): boolean => {
   if (isArray(val) || isString(val)) return val.length === 0

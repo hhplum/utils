@@ -1,6 +1,6 @@
 import { isWindow } from '../verify/env'
-import { isNumber } from '../verify/number'
-import { isString } from '../verify/string'
+import { isNumber } from '../verify/Number'
+import { isString } from '../verify/String'
 
 const chars =
   '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_+{}":?><;.,'.split(
@@ -112,9 +112,14 @@ export function randomStringArray(
 
   const result: (UUIDv4 | string)[] = []
   for (let i = 0; i < amount; i++) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const str = randomString(length, radix) as string | UUIDv4
-    result.includes(str) ? i-- : result.push(str)
+    if (result.includes(str)) {
+      i--
+    } else {
+      result.push(str)
+    }
   }
   return result
 }

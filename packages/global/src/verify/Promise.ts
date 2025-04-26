@@ -1,5 +1,5 @@
-import { isObject, isObjectIf } from './object'
-import { isFunction, isFunctionIf } from './function'
+import { isObject, isObjectIf } from './Object'
+import { isFunction, isFunctionIf } from './Function'
 
 export const isPromise = <T = any>(val: unknown): val is Promise<T> =>
   (isObject(val) || isFunction(val)) &&

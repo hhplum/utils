@@ -1,5 +1,5 @@
 import { isNOU } from '../verify/only'
-import { isArray } from '../verify/array'
+import { isArray } from '../verify/Array'
 import type { PlainObject } from '../info'
 
 /**

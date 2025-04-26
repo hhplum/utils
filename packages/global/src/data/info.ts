@@ -1,4 +1,4 @@
-import { isBooleanIf } from '../verify/boolean'
+import { isBooleanIf } from '../verify/Boolean'
 
 /**
  * Boolean构造函数生成对象的简化取值

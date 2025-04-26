@@ -1,4 +1,4 @@
-import { isString } from '../verify/string'
+import { isString } from '../verify/String'
 import type { DateInput, DateOptions } from './info'
 import { DayJs, dateFormat } from './info'
 import { isTime } from './isTime'
@@ -19,20 +19,18 @@ export const date = (
     const length = time.length
     const toFloat = (t: string) => (time = parseFloat(t))
     // 处理长度
-    length === 10 && toFloat(`${time}000`)
+    if (length === 10) toFloat(`${time}000`)
     // 字符转换
-    length >= 13 && toFloat(time)
+    if (length >= 13) toFloat(time)
   }
 
   if (isTime(time)) {
     time = DayJs(time)
-    locale && (time = time.locale(locale))
+    if (locale) time = time.locale(locale)
     // 处理时间计算
-    calculate &&
-      (time = time[calculate.mode](
-        calculate.confuse.num,
-        calculate.confuse.unit,
-      ))
+    if (calculate) {
+      time = time[calculate.mode](calculate.confuse.num, calculate.confuse.unit)
+    }
     out = time.format(format)
   }
   return out
