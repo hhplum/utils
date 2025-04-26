@@ -1,4 +1,4 @@
-import { isMap, isMapIf } from '../map'
+import { isMap, isMapIf } from '../Map'
 
 describe('Map类型检查', () => {
   describe('isMap', () => {

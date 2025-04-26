@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-array-constructor */
-import { isArray, isArrayIf, isArrayOf } from '../array'
+import { isArray, isArrayIf, isArrayOf } from '../Array'
 
 describe('数组类型检查', () => {
   describe('isArray', () => {

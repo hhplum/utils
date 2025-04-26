@@ -11,7 +11,7 @@ import {
   isPositiveNumber,
   isPositiveZero,
   isZero,
-} from '../number'
+} from '../Number'
 
 describe('数字类型检查', () => {
   describe('isNumber', () => {

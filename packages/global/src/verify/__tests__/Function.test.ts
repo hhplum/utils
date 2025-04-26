@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { isFunction, isFunctionOf } from '../function'
+import { isFunction, isFunctionOf } from '../Function'
 
 describe('函数类型检查', () => {
   describe('isFunction', () => {

@@ -8,7 +8,7 @@ import {
   isStringOf,
   isStringTrue,
   isStringUndefined,
-} from '../string'
+} from '../String'
 
 describe('字符串类型检查', () => {
   describe('isString', () => {

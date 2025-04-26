@@ -1,4 +1,4 @@
-import { isDate, isDateIf } from '../date'
+import { isDate, isDateIf } from '../Date'
 
 describe('日期类型检查', () => {
   describe('isDate', () => {

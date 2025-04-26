@@ -1,4 +1,4 @@
-import { isObject, isObjectIf, isPlainObject } from '../object'
+import { isObject, isObjectIf, isPlainObject } from '../Object'
 
 describe('对象类型检查', () => {
   describe('isObject', () => {

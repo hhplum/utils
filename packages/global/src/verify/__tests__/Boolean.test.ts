@@ -1,4 +1,4 @@
-import { isBoolean, isBooleanIf, isBooleanOf } from '../boolean'
+import { isBoolean, isBooleanIf, isBooleanOf } from '../Boolean'
 
 describe('布尔类型检查', () => {
   describe('isBoolean', () => {

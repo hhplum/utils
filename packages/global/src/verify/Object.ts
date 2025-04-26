@@ -1,10 +1,10 @@
 import { isNull } from './only'
 import { isTypeIf, isTypeOf, typeOf } from './info'
 
-export const isObject = (val: unknown): val is Object =>
+export const isObject = (val: unknown): val is object =>
   !isNull(val) && typeOf(val, 'object')
 
-export const isObjectIf = (val: unknown): val is Object =>
+export const isObjectIf = (val: unknown): val is object =>
   !isNull(val) && isTypeIf(val, Object)
 
 export const isPlainObject = (val: any): val is Record<any, any> => {

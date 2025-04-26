@@ -1,4 +1,4 @@
-import { isSet, isSetIf } from '../set'
+import { isSet, isSetIf } from '../Set'
 
 describe('Set Type Assertion Functions', () => {
   // isSet 测试
