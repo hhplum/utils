@@ -1,17 +1,32 @@
 {
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-  extends: ['config:base', 'schedule:weekly', 'group:allNonMajor'],
-  labels: ['dependencies'],
-  ignorePaths: ['**/__tests__/**'],
+  extends: [
+    'config:base',
+    'schedule:weekly',
+    'group:allNonMajor'
+  ],
+  labels: [
+    'dependencies'
+  ],
+  ignorePaths: [
+    '**/__tests__/**'
+  ],
   rangeStrategy: 'bump',
   packageRules: [
     {
-      depTypeList: ['peerDependencies'],
+      depTypeList: [
+        'peerDependencies'
+      ],
       enabled: false,
     },
     {
-      matchDepTypes: ['action'],
-      excludePackagePrefixes: ['actions/', 'github/'],
+      matchDepTypes: [
+        'action'
+      ],
+      excludePackagePrefixes: [
+        'actions/',
+        'github/'
+      ],
       pinDigests: true,
     },
   ],
@@ -21,7 +36,6 @@
     'rollup',
     'node',
     'typescript',
-
     // disruptive changes
 
     // breaking changes
@@ -36,15 +50,15 @@
     ],
   },
   customManagers: [
-    {
-      customType: 'regex',
-      fileMatch: [
-        // "packages\/create-vite\/src\/index\\.ts$"
-      ],
-      matchStrings: [
-        //  Dependencies in the code
-        '\/\/\\s*renovate:\\s+datasource=(?<datasource>\\S+)\\s+depName=(?<depName>\\S+)\\s+(?:var|let|const)\\s+\\S+\\s*=\\s*["\'](?<currentValue>[^"\']+)["\']',
-      ],
-    },
+    //    {
+    //      customType: 'regex',
+    //      fileMatch: [
+    //         "packages\/create-vite\/src\/index\\.ts$"
+    //      ],
+    //      matchStrings: [
+    //        //  Dependencies in the code
+    //        '\/\/\\s*renovate:\\s+datasource=(?<datasource>\\S+)\\s+depName=(?<depName>\\S+)\\s+(?:var|let|const)\\s+\\S+\\s*=\\s*["\'](?<currentValue>[^"\']+)["\']',
+    //      ],
+    //    },
   ],
 }
