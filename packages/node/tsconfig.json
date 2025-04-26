@@ -16,10 +16,10 @@
     "removeComments": false,
     "declaration": true,
     "declarationDir": "dist",
-    "lib": ["ES2021", "DOM", "DOM.Iterable"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "paths": {
       "@hhplum/utils-*": ["../*"]
     },
-    "types": ["node", "vitest/globals", "jsdom"]
+    "types": ["node", "vitest/globals", "vitest/jsdom"]
   }
 }

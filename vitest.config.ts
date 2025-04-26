@@ -7,16 +7,38 @@ const packages = (path: string = '') => root('packages', path)
 export default defineConfig({
   publicDir: false,
   test: {
-    include: ['**/__tests__/**/*.test.[tj]s'],
-    exclude: ['**/node_modules/**', '**/dist/**'],
+    coverage: {
+      exclude: ['**/node_modules/**', '**/dist/**'],
+    },
+    deps: {
+      moduleDirectories: ['node_modules', 'packages'],
+    },
     testTimeout: 20000,
     isolate: false,
     globals: true,
-    environmentMatchGlobs: [
-      ['packages/browser', 'jsdom'],
-      ['packages/global', 'jsdom'],
-      ['packages/node', 'node'],
-      ['packages/test', 'node'],
+    clearMocks: true,
+    workspace: [
+      {
+        extends: true,
+        test: {
+          include: [
+            'packages/browser/src/**/__tests__/**/*.test.[tj]s',
+            'packages/global/src/**/__tests__/**/*.test.[tj]s',
+          ],
+          name: 'browser',
+          environment: 'jsdom',
+        },
+      },
+      {
+        extends: true,
+        test: {
+          include: [
+            'packages/node/src/**/__tests__/**/*.test.[tj]s',
+            'packages/test/src/**/__tests__/**/*.test.[tj]s',
+          ],
+          name: 'node',
+        },
+      },
     ],
   },
   esbuild: {
