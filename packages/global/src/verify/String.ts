@@ -7,17 +7,17 @@ export const isStringOf = (val: unknown): val is string =>
 
 export const isStringIf = (val: unknown): val is string => isTypeIf(val, String)
 
-export const isStringNull = (val: unknown): val is string => val === 'null'
+export const isStringNull = (val: unknown): val is 'null' => val === 'null'
 
-export const isStringUndefined = (val: unknown): val is string =>
+export const isStringUndefined = (val: unknown): val is 'undefined' =>
   val === 'undefined'
 
-export const isStringTrue = (val: unknown): val is string => val === 'true'
+export const isStringTrue = (val: unknown): val is 'true' => val === 'true'
 
-export const isStringFalse = (val: unknown): val is string => val === 'false'
+export const isStringFalse = (val: unknown): val is 'false' => val === 'false'
 
-export const isStringBoolean = (val: unknown): val is string =>
+export const isStringBoolean = (val: unknown): val is 'true' | 'false' =>
   isStringTrue(val) || isStringFalse(val)
 
-export const isStringNumber = (val: unknown): val is string =>
-  !isNaN(Number(val))
+export const isStringNumber = (val: unknown): val is `${number}` =>
+  isString(val) && /^-?\d+(?:\.\d+)?$/.test(val)
