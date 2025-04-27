@@ -1,5 +1,5 @@
 // 转换系列
-import type { PlainObject } from '../info'
+import type { PlainObject } from '../base/Object'
 import { isArray } from '../verify/Array'
 import { isString } from '../verify/String'
 

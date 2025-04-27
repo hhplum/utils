@@ -1,4 +1,4 @@
-declare let global: {}
+declare let global: {} & object
 
 let _globalThis: any
 export const getGlobalThis = (): any => {
@@ -23,14 +23,6 @@ export const NOOP = (): void => {}
  * Function
  */
 export type Fn<T = void> = (...arg: any[]) => T
-
-/**
- * PlainObject
- * @note 松散宽泛程度：object > Record > PlainObject
- */
-export type PlainObject<T extends PropertyKey = PropertyKey, V = any> = {
-  [key in T]: V
-}
 
 /**
  * 从I接口中筛选出为T类型的key

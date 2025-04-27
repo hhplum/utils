@@ -1,5 +1,5 @@
 import { isString } from '../verify/String'
-import type { PlainObject } from '../info'
+import type { PlainObject } from '../base/Object'
 import type { CipherHelper, CryptoKey } from './info'
 import {
   CryptoJs,

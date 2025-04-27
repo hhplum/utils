@@ -1,6 +1,6 @@
 import { isNOU } from '../verify/only'
 import { isArray } from '../verify/Array'
-import type { PlainObject } from '../info'
+import type { PlainObject } from '../base/Object'
 
 /**
  * 根据指定路径从对象中安全获取值
