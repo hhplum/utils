@@ -1,13 +1,19 @@
+import type { PlainObject } from '../base/Object'
 import { isNull } from './only'
 import { isTypeIf, isTypeOf, typeOf } from './info'
 
+/**
+ * 是否为对象
+ * @param val
+ * @note 仅非原始类型，开启 strictNullChecks 时，object 类型默认排除 null 和 undefined
+ */
 export const isObject = (val: unknown): val is object =>
   !isNull(val) && typeOf(val, 'object')
 
 export const isObjectIf = (val: unknown): val is object =>
   !isNull(val) && isTypeIf(val, Object)
 
-export const isPlainObject = (val: any): val is Record<any, any> => {
+export const isPlainObject = (val: any): val is PlainObject => {
   let cons, prot
 
   const isObject = (v: any) => isTypeOf(v, 'Object')
