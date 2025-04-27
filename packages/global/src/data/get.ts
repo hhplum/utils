@@ -1,4 +1,4 @@
-import { isNOU } from '../verify/only'
+import { isNullOrUndefined } from '../verify/only'
 import { isArray } from '../verify/Array'
 import type { PlainObject } from '../base/Object'
 
@@ -14,7 +14,7 @@ export function get(
   path: string | (string | number)[],
   defaultValue?: any,
 ): any {
-  if (isNOU(obj)) return defaultValue
+  if (isNullOrUndefined(obj)) return defaultValue
 
   const paths = isArray(path)
     ? path
@@ -29,5 +29,5 @@ export function get(
     current = current?.[key]
   }
 
-  return isNOU(current) ? defaultValue : current
+  return isNullOrUndefined(current) ? defaultValue : current
 }

@@ -1,4 +1,4 @@
-import { isNOU } from './only'
+import { isNullOrUndefined } from './only'
 import { isNumber } from './Number'
 import { isString } from './String'
 import { isFunction } from './Function'
@@ -14,7 +14,7 @@ export const isElement = (val: unknown): val is Element => {
   const tagName = (val as Element | any)?.tagName
   const nodeType = (val as Element | any)?.nodeType
 
-  if (isNOU(tagName) || isNOU(nodeType)) return false
+  if (isNullOrUndefined(tagName) || isNullOrUndefined(nodeType)) return false
 
   if (!isString(tagName) || !isNumber(nodeType)) return false
 
