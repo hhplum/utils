@@ -10,6 +10,7 @@ export const isEmpty = (val: unknown): boolean => {
   if (isObject(val)) return Object.keys(val).length === 0
   return false
 }
+
 export const isEmptyString = (val: unknown): val is string =>
   isString(val) && val.length === 0
 

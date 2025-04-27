@@ -1,7 +1,6 @@
-// 无需使用new创建
 import { typeOf } from './info'
 
-export const isNull = (val: unknown): val is null => val == null
+export const isNull = (val: unknown): val is null => val === null
 
 export const isUndefined = (val: unknown): val is undefined => val === undefined
 
