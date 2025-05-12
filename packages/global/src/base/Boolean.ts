@@ -45,3 +45,8 @@ export const isFalsy = <T>(value: T): boolean => !isTruthy(value)
  * @alias isTruthy
  */
 export const toBoolean = isTruthy
+
+export const YES = (): true => true
+export const NO = (): false => false
+
+export type Is = <V>(value?: V) => boolean
