@@ -1,4 +1,5 @@
-import { isNull } from './null'
+import { isNull, isNullOrUndefined } from './null'
+import type { Is } from './Boolean'
 
 /**
  * plain object | 普通对象
@@ -75,9 +76,12 @@ const hasOwnProperty = Object.prototype.hasOwnProperty
  * Checks if the object contains the specified property key | 检查对象是否包含指定的属性键
  * @param object
  * @param key
+ * @param [handle=isNullOrUndefined]
  * @note Not judging attributes in the prototype chain | 不包括原型链上的属性
  */
-export const hasOwn = <O extends object, K extends PropertyKey>(
+export const hasOwn = <O, K extends PropertyKey>(
   object: O,
   key: K,
-): key is K & keyof O => hasOwnProperty.call(object, key)
+  handle: Is = isNullOrUndefined,
+): key is K & keyof O =>
+  handle(object) ? false : hasOwnProperty.call(object, key)
