@@ -1,4 +1,5 @@
 import { toTypeString } from './Object'
+import { isFinite } from './Number'
 
 /**
  * Whether the passed value is a string | 传递的值是否为字符串
@@ -60,5 +61,17 @@ export const isStringBoolean = (value: unknown): value is 'true' | 'false' =>
  * Whether the value passed is a number value in the form of a string | 传递的值是否是字符串形式的数字
  * @param value
  */
-export const isStringNumber = (value: unknown): value is `${number}` =>
-  isString(value) && /^-?\d+(?:\.\d+)?$/.test(value)
+export const isStringNumber = (value: unknown): value is `${number}` => {
+  // 快速排除明显非数字的字符串
+  if (!isString(value) || value.trim() === '') {
+    return false
+  }
+
+  // 使用简单正则快速筛选
+  if (/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(value)) {
+    return true
+  }
+
+  // 最终精确验证
+  return isFinite(Number(value))
+}

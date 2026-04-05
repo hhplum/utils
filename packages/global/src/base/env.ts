@@ -1,5 +1,5 @@
 import { isObject, toTypeString } from './Object'
-import { isNullOrUndefined } from './null'
+import { isNullOrUndefined } from './Null'
 import { isNumber } from './Number'
 import { isString } from './String'
 import { isFunction } from './Function'

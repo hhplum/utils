@@ -67,7 +67,17 @@ it('isStringBoolean', () => {
 
 it('isStringNumber', () => {
   expect(isStringNumber('123')).toBe(true)
-  expect(isStringNumber('12.3')).toBe(true)
+  expect(isStringNumber('123.')).toBe(true)
+  expect(isStringNumber('123.34')).toBe(true)
+  expect(isStringNumber('.123')).toBe(true)
+  expect(isStringNumber('0.123')).toBe(true)
+  expect(isStringNumber('12e3')).toBe(true)
+  expect(isStringNumber('-123')).toBe(true)
+  expect(isStringNumber('-123.')).toBe(true)
+  expect(isStringNumber('-123.34')).toBe(true)
+  expect(isStringNumber('-.123')).toBe(true)
+  expect(isStringNumber('-0.123')).toBe(true)
+  expect(isStringNumber('-12e3')).toBe(true)
 
   expect(isStringNumber('12.3.4')).toBe(false)
   expect(isStringNumber('abc')).toBe(false)

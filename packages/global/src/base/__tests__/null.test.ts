@@ -3,7 +3,7 @@ import {
   isNullOrUndefined,
   isNullOrUndefinedTS,
   isNullTS,
-} from '../null'
+} from '../Null'
 
 it('isNull', () => {
   expect(isNull(null)).toBe(true)

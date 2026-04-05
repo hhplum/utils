@@ -3,14 +3,14 @@ import { toTypeString } from './Object'
 /**
  * Returns whether the string representing this object is a WeakSet type string | 返回表示此对象的字符串是否是 WeakSet 类型对应字符串
  * @param value
- * @alias isWeakSet
+ * @alias {@link isWeakSet}
  */
 export const isWeakSetTS = (value: unknown): value is WeakSet<any> =>
   toTypeString(value) === '[object WeakSet]'
 
 /**
  * Whether the passed value is a WeakSet | 传递的值是否为 WeakSet
- * @alias isWeakSetTS
+ * @alias {@link isWeakSetTS}
  */
 export const isWeakSet = isWeakSetTS
 

@@ -1,4 +1,4 @@
-import { isNull, isNullOrUndefined } from './null'
+import { isNull, isNullOrUndefined } from './Null'
 import type { Is } from './Boolean'
 
 /**
@@ -6,9 +6,11 @@ import type { Is } from './Boolean'
  */
 export type PlainObject<K extends PropertyKey = string, V = any> = Record<K, V>
 
+export type ValueOf<O> = O[keyof O]
+
 /**
  * Returns a string representing this object | 返回表示此对象的字符串
- * @alias Object.prototype.toString
+ * @alias {@link Object.prototype.toString}
  */
 export const objectToString = Object.prototype.toString
 
@@ -27,6 +29,7 @@ export const toTypeString = (value: unknown): string =>
 export const toRawType = (value: unknown): string =>
   toTypeString(value).slice(8, -1)
 
+// TODO strictNullChecks
 /**
  * Whether the passed value is an object | 传递的值是否为对象
  * @param value
@@ -54,20 +57,18 @@ export const isObjectCR = (value: unknown): value is object =>
  * @param value
  */
 export const isPlainObject = (value: any): value is PlainObject => {
-  let cons, prot
+  if (isObject(value) === false) return false
 
-  if (isObjectTS(value) === false) return false
+  const gpf = Object.getPrototypeOf
+  const prototype = gpf(value)
 
-  cons = value.constructor
-  if (cons === undefined) return true
-
-  prot = cons.prototype
-  if (isObject(prot) === false) return false
-
-  if (Object.prototype.hasOwnProperty.call(prot, 'isPrototypeOf') === false) {
-    return false
-  }
-  return true
+  return (
+    (isNull(prototype) ||
+      prototype === Object.prototype ||
+      isNull(gpf(prototype))) &&
+    !(Symbol.toStringTag in value) &&
+    !(Symbol.iterator in value)
+  )
 }
 
 const hasOwnProperty = Object.prototype.hasOwnProperty
@@ -85,3 +86,33 @@ export const hasOwn = <O, K extends PropertyKey>(
   handle: Is = isNullOrUndefined,
 ): key is K & keyof O =>
   handle(object) ? false : hasOwnProperty.call(object, key)
+
+/**
+ * 获取安全对象
+ * @description 返回一个包含字段数组所有字段的对象
+ * @param object
+ * @param keys 字段数组
+ * @note 只能用于浅层不包含递归
+ * @note object参数主要用于初始化字段的值
+ */
+export const toSafeObj = <
+  O extends Partial<Record<K, any>>,
+  K extends PropertyKey,
+>(
+  object?: O | null,
+  keys: K[] = [],
+): { [P in K]?: O[P] } =>
+  keys.reduce(
+    (acc, key) => {
+      if (object && key in object && object[key]) {
+        acc[key] = object[key]
+      }
+      return acc
+    },
+    {} as { [P in K]?: O[P] },
+  )
+
+/**
+ * @alias {@link Object.keys}
+ */
+export const keys = Object.keys as <O>(object: O) => (keyof O)[]

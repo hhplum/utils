@@ -3,14 +3,14 @@ import { toTypeString } from './Object'
 /**
  * Returns whether the string representing this object is a WeakMap type string | 返回表示此对象的字符串是否是 WeakMap 类型对应字符串
  * @param value
- * @alias isWeakMap
+ * @alias {@link isWeakMap}
  */
 export const isWeakMapTS = (value: unknown): value is WeakMap<any, any> =>
   toTypeString(value) === '[object WeakMap]'
 
 /**
  * Whether the passed value is a WeakMap | 传递的值是否为 WeakMap
- * @alias isWeakMapTS
+ * @alias {@link isWeakMapTS}
  */
 export const isWeakMap = isWeakMapTS
 

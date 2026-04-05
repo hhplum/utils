@@ -3,14 +3,14 @@ import { toTypeString } from './Object'
 /**
  * Returns whether the string representing this object is a map type string | 返回表示此对象的字符串是否是映射类型对应字符串
  * @param value
- * @alias isMap
+ * @alias {@link isMap}
  */
 export const isMapTS = (value: unknown): value is Map<any, any> =>
   toTypeString(value) === '[object Map]'
 
 /**
  * Whether the passed value is a map | 传递的值是否为映射
- * @alias isMapTS
+ * @alias {@link isMapTS}
  */
 export const isMap = isMapTS
 

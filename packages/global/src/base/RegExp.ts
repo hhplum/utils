@@ -3,14 +3,14 @@ import { toTypeString } from './Object'
 /**
  * Returns whether the string representing this object is a RegExp type string | 返回表示此对象的字符串是否是 RegExp 类型对应字符串
  * @param value
- * @alias isRegExp
+ * @alias {@link isRegExp}
  */
 export const isRegExpTS = (value: unknown): value is RegExp =>
   toTypeString(value) === '[object RegExp]'
 
 /**
  * Whether the passed value is a RegExp | 传递的值是否为 RegExp
- * @alias isRegExpTS
+ * @alias {@link isRegExpTS}
  */
 export const isRegExp = isRegExpTS
 

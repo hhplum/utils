@@ -1,8 +1,8 @@
-import { isNull } from './null'
+import { isNull } from './Null'
 
 /**
  * Primitive | 原始数据类型
- * @docs https://developer.mozilla.org/en-US/docs/Glossary/Primitive
+ * @see {@link https://developer.mozilla.org/en-US/docs/Glossary/Primitive}
  */
 export type Primitive =
   | string

@@ -1,60 +1,102 @@
-// 所有数字相关
+/**
+ * Whether the passed value is a finite number | 传递的值是否为有限数
+ * @alias {@link Number.isFinite}
+ * @note Numbers other than positive or negative infinity or NaN | 正负 Infinity 或 NaN 以外数字
+ * @note In comparison to the global isFinite() function, Number.isFinite() method doesn't first convert the parameter to a number. This means only values of the type number and are finite return true, and non-numbers always return false. | 与全局 isFinite() 函数相比，Number.isFinite() 不会先将参数转换为数字，这意味着只有类型为数字且为有限数的值才返回 true，而非数字的值始终返回 false。
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite#difference_between_number.isfinite_and_global_isfinite}
+ */
+export const isFinite = Number.isFinite
 
 /**
  * Whether the passed value is a NaN | 传递的值是否为 NaN
- * @param value
+ * @alias {@link Number.isNaN}
  * @note Returns false if the input is not of the Number type. It is a more robust version of the original, global isNaN() function | 如果输入不是数字类型，则返回 false。它是全局 isNaN() 函数更健壮的版本
  */
 export const isNaN = Number.isNaN
-// 原生提供
-// Number.isFinite() || isFinite() 【正负Infinity 或 NaN以外数字】
-// Number.isInteger()【整数】
 
-// Number.isFinite() 和全局 isFinite() 之间的不同
-// isFinite会先将参数转换为数字，这意味着只有类型为数字且为有限数的值才返回 true，而非数字的值始终返回 false。
-// https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite#number.isfinite_%E5%92%8C%E5%85%A8%E5%B1%80_isfinite_%E4%B9%8B%E9%97%B4%E7%9A%84%E4%B8%8D%E5%90%8C
-
-const common = (value: unknown, condition: boolean) =>
-  isNumber(value) && condition
-
+/**
+ * Whether the passed value is a number | 传递的值是否为数字
+ * @param value
+ */
 export const isNumber = (value: unknown): value is number =>
   typeof value === 'number'
 
-// 小数
+/**
+ * 小数
+ * @param value
+ */
 export const isFloat = (value: unknown): value is number =>
-  common(value, !Number.isInteger(value))
+  isFinite(value) && !isInteger(value)
 
-// 位运算符
-// 奇数【1】
+/**
+ * 奇数
+ * @param value
+ * @note 位运算实现，结果为1
+ */
 export const isOdd = (value: unknown): value is number =>
-  common(value, (value as number) % 2 !== 0)
-// 偶数【0】
+  isFinite(value) && ((value as number) & 1) === 1
+
+/**
+ * 偶数
+ * @param value
+ * @note 位运算实现，结果为0
+ */
 export const isEven = (value: unknown): value is number =>
-  common(value, (value as number) % 2 === 0)
+  isFinite(value) && ((value as number) & 1) === 0
 
-// 零【正负0都包含】
+/**
+ * 零
+ * @param value
+ * @note 正负0都包含
+ */
 export const isZero = (value: unknown): value is number =>
-  common(value, value === 0)
-// 正零
+  isNumber(value) && value === 0
+
+/**
+ * 正零
+ * @param value
+ */
 export const isPositiveZero = (value: unknown): value is number =>
-  common(value, Object.is(value, 0))
-// 负零
+  isNumber(value) && Object.is(value, 0)
+
+/**
+ * 负零
+ * @param value
+ */
 export const isNegativeZero = (value: unknown): value is number =>
-  common(value, Object.is(value, -0))
+  isNumber(value) && Object.is(value, -0)
 
-// 正数
+/**
+ * 正数
+ * @param value
+ */
 export const isPositiveNumber = (value: unknown): value is number =>
-  common(value, Math.sign(value as number) === 1)
-// 负数
-export const isNegativeNumber = (value: unknown): value is number =>
-  common(value, Math.sign(value as number) === -1)
+  isNumber(value) && Math.sign(value) === 1
 
-// 整数
-export const isInteger = (value: unknown): value is number =>
-  Number.isInteger(value)
-// 正整数
+/**
+ * 负数
+ * @param value
+ */
+export const isNegativeNumber = (value: unknown): value is number =>
+  isNumber(value) && Math.sign(value) === -1
+
+/**
+ * 整数
+ * @param value
+ * @alias {@link Number.isInteger}
+ */
+export const isInteger = Number.isInteger
+
+/**
+ * 正整数
+ * @param value
+ */
 export const isPositiveInteger = (value: unknown): value is number =>
   isPositiveNumber(value) && isInteger(value)
-// 负整数
+
+/**
+ * 负整数
+ * @param value
+ */
 export const isNegativeInteger = (value: unknown): value is number =>
   isNegativeNumber(value) && isInteger(value)

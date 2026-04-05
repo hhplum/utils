@@ -3,14 +3,14 @@ import { toTypeString } from './Object'
 /**
  * Returns whether the string representing this object is a date type string | 返回表示此对象的字符串是否是 Date 类型对应字符串
  * @param value
- * @alias isDate
+ * @alias {@link isDate}
  */
 export const isDateTS = (value: unknown): value is Date =>
   toTypeString(value) === '[object Date]'
 
 /**
  * Whether the passed value is a date | 传递的值是否为 Date
- * @alias isDateTS
+ * @alias {@link isDateTS}
  */
 export const isDate = isDateTS
 

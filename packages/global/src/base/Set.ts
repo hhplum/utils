@@ -3,14 +3,14 @@ import { toTypeString } from './Object'
 /**
  * Returns whether the string representing this object is a set type string | 返回表示此对象的字符串是否是集合类型对应字符串
  * @param value
- * @alias isSet
+ * @alias {@link isSet}
  */
 export const isSetTS = (value: unknown): value is Set<any> =>
   toTypeString(value) === '[object Set]'
 
 /**
  * Whether the passed value is a set | 传递的值是否为集合
- * @alias isDateTS
+ * @alias {@link isDateTS}
  */
 export const isSet = isSetTS
 

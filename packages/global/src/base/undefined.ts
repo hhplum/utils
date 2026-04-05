@@ -20,3 +20,9 @@ export const isUndefinedTS = (value: unknown): value is undefined =>
  */
 export const isDefined = <V = any>(value?: V): value is V =>
   typeof value !== 'undefined'
+
+/**
+ * Whether the passed value is a defined | 传递的值是否为已定义的
+ * @alias {@link isDefined}
+ */
+export const isDef = isDefined

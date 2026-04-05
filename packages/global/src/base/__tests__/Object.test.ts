@@ -1,8 +1,15 @@
-import { isObject, isObjectCR, isObjectTS, isPlainObject } from '../Object'
+import {
+  hasOwn,
+  isObject,
+  isObjectCR,
+  isObjectTS,
+  isPlainObject,
+  toSafeObj,
+} from '../Object'
 
 it('isObject', () => {
   expect(isObject({})).toBe(true)
-  expect(isObject(new Date())).toBe(true) // Date is an object too
+  expect(isObject(new Date())).toBe(true)
 
   expect(isObject(null)).toBe(false)
   expect(isObject(5)).toBe(false)
@@ -35,4 +42,17 @@ it('isPlainObject', () => {
   expect(isPlainObject(5)).toBe(false)
   expect(isPlainObject('hello')).toBe(false)
   expect(isPlainObject(new Date())).toBe(false)
+})
+
+it('hasOwn', () => {
+  expect(hasOwn({ test: 'test' }, 'test')).toBe(true)
+
+  expect(hasOwn(null, 'test')).toBe(false)
+  expect(hasOwn(undefined, 'test')).toBe(false)
+})
+
+// TODO toSafeObj test
+it('toSafeObj', () => {
+  // expect()
+  console.log(toSafeObj({ value: 'test' }, ['value', 'ccs']))
 })
