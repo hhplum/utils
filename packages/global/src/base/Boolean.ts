@@ -49,4 +49,4 @@ export const toBoolean = isTruthy
 export const YES = (): true => true
 export const NO = (): false => false
 
-export type Is = <V>(value?: V) => boolean
+export type Is<V = any> = (value?: V) => boolean
