@@ -29,7 +29,7 @@
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^18.19.39",
+    "@types/node": "^24.13.3",
     "conventional-changelog-cli": "^5.0.0",
     "esbuild": "^0.25.2",
     "eslint": "^9.25.0",
